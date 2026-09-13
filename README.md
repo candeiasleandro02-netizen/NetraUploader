@@ -24,35 +24,60 @@ You'll need: a Cloudflare account (free tier is fine) and a Telegram account. Ev
 
 ### Installation
 
-1. **Create your Telegram bot** — in Telegram, open `@BotFather`, send `/newbot`, and follow the prompts. Save the token it gives you — that's your `BOT_TOKEN`.
+1. **Create your bot**
+   - Open Telegram, search for **@BotFather**, and start a chat with it.
+   - Send `/newbot` and follow the prompts (it'll ask you to pick a name).
+   - At the end it gives you a long code called a **token**. Copy and save it — this is your `BOT_TOKEN`.
 
-2. **Get your Telegram user ID** — message `@userinfobot` on Telegram and copy your numeric ID — that's your `OWNER_ID` (only this account can access the admin panel at first).
+2. **Find your Telegram ID**
+   - Search for **@userinfobot** and send it any message.
+   - It replies with a number — that's your personal ID. Save it — this is your `OWNER_ID`.
 
-3. **Create a D1 database (via the dashboard)** — log into the Cloudflare dashboard, go to **Workers & Pages → D1**, click "Create database", name it `filestore-bot`, and create it. Open the database's page afterward and note the `Database ID` shown there.
+3. **Sign up for a free Cloudflare account**
+   - Go to [dash.cloudflare.com](https://dash.cloudflare.com) and sign up (the free plan is enough).
 
-4. **Load the database schema** — on the database page, open the "Console" tab. Open `schema.sql` in a text editor, copy its entire contents, paste them into the console, and run it.
+4. **Create a database**
+   - In the Cloudflare dashboard, click **Workers & Pages** on the left, then click **D1**.
+   - Click **Create database**, type the name `filestore-bot`, and create it.
+   - Open the new database and copy the **Database ID** shown on the page — save it for later.
 
-5. **Create the Worker** — go to Workers & Pages, click "Create", choose "Create Worker", give it a name (e.g. `telegram-filestore-bot`), and deploy it with the default code to finish creating it.
+5. **Load the starting structure into the database**
+   - On that same database page, click the **Console** tab.
+   - Open the `schema.sql` file (included in this project) with Notepad or any text editor.
+   - Copy everything in it, paste it into the Console box, and click **Run**.
 
-6. **Paste in the code** — open the Worker, click "Edit code" (Quick Edit), delete the default code, open `worker.js`, copy its entire contents, paste it into the editor, then click "Save and deploy".
+6. **Create the Worker** (this is where your bot's code will live)
+   - Go back to **Workers & Pages**, click **Create**, then **Create Worker**.
+   - Give it any name, e.g. `my-file-bot`, and click **Deploy** to finish creating it.
 
-7. **Bind the database** — on the Worker's Settings → Variables (or Bindings) tab, find "D1 Database Bindings", click "Add binding", set the variable name to `DB`, and select the `filestore-bot` database you created. Save.
+7. **Add your bot's code**
+   - Open the Worker you just created and click **Edit code**.
+   - Delete all the default code inside.
+   - Open the `worker.js` file from this project, copy everything in it, and paste it in.
+   - Click **Save and deploy**.
 
-8. **Add variables and secrets** — on the same Variables tab:
-   - Add an environment variable `OWNER_ID` with your numeric Telegram ID as the value (plain text).
-   - Add a secret variable `BOT_TOKEN` with your bot's token as the value (check the "Encrypt" option).
-   - Add a secret variable `WEBHOOK_SECRET` with any random string you make up (e.g. a UUID), also encrypted.
-   Save, and redeploy if prompted.
+8. **Set up your Worker's variables** (this covers everything in the Variables tab)
+   - Go to the Worker's **Settings** tab, then click **Variables** (sometimes called Bindings).
+   - Under **D1 Database Bindings**, click **Add binding**. For "Variable name" type `DB`, and pick the `filestore-bot` database.
+   - Still on this tab, add these three variables one at a time:
+     - `OWNER_ID` → your Telegram ID from step 2 (plain text is fine).
+     - `BOT_TOKEN` → your bot's token from step 1 (turn on "Encrypt").
+     - `WEBHOOK_SECRET` → make up a random string of **at least 16 characters** (mix of letters and numbers, e.g. `mySecret2026XYZ!`) — also turn on "Encrypt". The longer and more random, the safer.
+   - Click **Save** (and redeploy if it asks you to).
 
-9. **Note your Worker's URL** — the Worker's overview page shows its `*.workers.dev` address.
+9. **Copy your Worker's web address**
+    - On the Worker's main page you'll see an address ending in `.workers.dev`. Copy it.
 
-10. **Point Telegram at your worker**:
-    ```bash
-    curl "https://api.telegram.org/bot<BOT_TOKEN>/setWebhook?url=https://<your-worker>.workers.dev/webhook/<WEBHOOK_SECRET>"
+10. **Tell Telegram where your bot lives**
+    - Open this link in your browser, replacing the parts inside `< >` with your own token and worker address:
     ```
-    (Run this in any terminal, or just paste the URL into a browser's address bar — nothing needs to be installed.)
+    https://api.telegram.org/bot<BOT_TOKEN>/setWebhook?url=https://<your-worker>.workers.dev/webhook/<WEBHOOK_SECRET>
+    ```
+    - If it worked, you'll see `{"ok":true,...}` on the page.
 
-11. **Test it** — open your bot on Telegram and send `/start`. As the owner, send `/admin` to open the admin panel (set your storage channel there first — forward any message from it to the bot when prompted, with the bot added as admin of that channel).
+11. **Try it out!**
+    - Open your bot in Telegram and send `/start`.
+    - Since you're the owner, also send `/admin` to open the control panel. The first thing it asks for is your storage channel — just forward it any message from that channel (make sure your bot is an admin of that channel first).
 
 ### Support
 
@@ -74,35 +99,60 @@ Questions or issues? Reach out on Telegram: **[@NetraIR](https://t.me/NetraIR)**
 
 ### نصب
 
-1. **ساخت ربات تلگرام** — در تلگرام `@BotFather` را باز کنید، دستور `/newbot` را بفرستید و مراحل را دنبال کنید. توکنی که می‌دهد را ذخیره کنید — همان `BOT_TOKEN` شماست.
+1. **ربات‌تان را بسازید**
+   - تلگرام را باز کنید، دنبال **BotFather@** بگردید و با آن چت را شروع کنید.
+   - پیام `/newbot` را بفرستید و مراحل را دنبال کنید (از شما یک اسم می‌خواهد).
+   - در پایان یک کد طولانی به شما می‌دهد به نام **توکن**. آن را کپی و جایی ذخیره کنید — این همان `BOT_TOKEN` شماست.
 
-2. **گرفتن آی‌دی عددی تلگرام خودتان** — به `@userinfobot` پیام بدهید و آی‌دی عددی خود را کپی کنید — همان `OWNER_ID` است (در ابتدا فقط همین حساب به پنل مدیریت دسترسی دارد).
+2. **آی‌دی تلگرام‌تان را پیدا کنید**
+   - دنبال **userinfobot@** بگردید و هر پیامی برایش بفرستید.
+   - یک عدد برایتان می‌فرستد — همان آی‌دی شخصی شماست. آن را ذخیره کنید — این `OWNER_ID` شماست.
 
-3. **ساخت دیتابیس D1 (از طریق پنل وب)** — وارد داشبورد Cloudflare شوید، به بخش **Workers & Pages → D1** بروید، روی «Create database» کلیک کنید، نام `filestore-bot` را وارد کنید و بسازید. پس از ساخت، وارد صفحهٔ دیتابیس شوید و مقدار `Database ID` نمایش داده‌شده را یادداشت کنید.
+3. **یک حساب رایگان Cloudflare بسازید**
+   - به آدرس [dash.cloudflare.com](https://dash.cloudflare.com) بروید و ثبت‌نام کنید (پلن رایگان کافی است).
 
-4. **بارگذاری ساختار دیتابیس** — در همان صفحهٔ دیتابیس، تب «Console» را باز کنید. فایل `schema.sql` را با یک ویرایشگر متن باز کنید، تمام محتوای آن را کپی کنید، در کنسول جای‌گذاری کنید و اجرا (Run) کنید.
+4. **یک دیتابیس بسازید**
+   - در داشبورد Cloudflare، از منوی سمت چپ روی **Workers & Pages** و سپس **D1** کلیک کنید.
+   - روی **Create database** کلیک کنید، نام `filestore-bot` را بنویسید و بسازید.
+   - دیتابیس تازه‌ساخته را باز کنید و مقدار **Database ID** نمایش داده‌شده را کپی و جایی یادداشت کنید.
 
-5. **ساخت Worker** — به بخش Workers & Pages بروید، روی «Create» کلیک کنید، گزینهٔ «Create Worker» را انتخاب کنید، نامی مثل `telegram-filestore-bot` بدهید و آن را با کد پیش‌فرض مستقر کنید تا ساخته شود.
+5. **ساختار اولیهٔ دیتابیس را وارد کنید**
+   - در همان صفحهٔ دیتابیس، تب **Console** را باز کنید.
+   - فایل `schema.sql` (همراه این پروژه) را با یک ویرایشگر متن مثل Notepad باز کنید.
+   - کل محتوای آن را کپی کنید، در کادر Console جای‌گذاری کنید و روی **Run** کلیک کنید.
 
-6. **جای‌گذاری کد** — وارد Worker شوید، روی «Edit code» (یا Quick Edit) کلیک کنید، کد پیش‌فرض را پاک کنید، فایل `worker.js` را باز کرده و کل محتوای آن را کپی و در ویرایشگر جای‌گذاری کنید، سپس «Save and deploy» را بزنید.
+6. **Worker بسازید** (جایی که کد ربات‌تان زندگی می‌کند)
+   - دوباره به **Workers & Pages** برگردید، روی **Create** و سپس **Create Worker** کلیک کنید.
+   - یک نام دلخواه مثل `my-file-bot` بدهید و روی **Deploy** بزنید تا ساخته شود.
 
-7. **اتصال دیتابیس به Worker** — به تب Settings → Variables (یا Bindings) همان Worker بروید، بخش «D1 Database Bindings» را پیدا کنید، روی «Add binding» کلیک کنید، نام متغیر را `DB` بگذارید و دیتابیس `filestore-bot` را انتخاب کنید. ذخیره کنید.
+7. **کد ربات را اضافه کنید**
+   - Workerی که ساختید را باز کنید و روی **Edit code** کلیک کنید.
+   - تمام کد پیش‌فرض داخلش را پاک کنید.
+   - فایل `worker.js` (همراه این پروژه) را باز کنید، همه‌اش را کپی و اینجا جای‌گذاری کنید.
+   - روی **Save and deploy** کلیک کنید.
 
-8. **افزودن متغیرها و مقادیر محرمانه** — در همان تب Variables:
-   - یک متغیر محیطی با نام `OWNER_ID` و مقدار آی‌دی عددی تلگرام خودتان اضافه کنید (به‌صورت متن ساده).
-   - یک متغیر محرمانه با نام `BOT_TOKEN` و مقدار توکن ربات اضافه کنید (گزینهٔ Encrypt را فعال کنید).
-   - یک متغیر محرمانه با نام `WEBHOOK_SECRET` و یک رشتهٔ تصادفی دلخواه (مثلاً یک UUID) اضافه کنید، آن هم به‌صورت رمزنگاری‌شده.
-   در پایان تغییرات را ذخیره و در صورت درخواست، دوباره Deploy کنید.
+8. **متغیرهای Worker را تنظیم کنید** (همهٔ این کارها در یک تب انجام می‌شود)
+   - به تب **Settings** ورکر بروید، سپس روی **Variables** کلیک کنید (گاهی Bindings هم نامیده می‌شود).
+   - در بخش **D1 Database Bindings** روی **Add binding** کلیک کنید. در قسمت «Variable name» بنویسید `DB` و دیتابیس `filestore-bot` را انتخاب کنید.
+   - در همان تب، این سه متغیر را هم یکی‌یکی اضافه کنید:
+     - `OWNER_ID` ← همان آی‌دی تلگرامی که در مرحلهٔ ۲ گرفتید (متن ساده کافی است).
+     - `BOT_TOKEN` ← همان توکنی که در مرحلهٔ ۱ گرفتید (گزینهٔ «Encrypt» را روشن کنید).
+     - `WEBHOOK_SECRET` ← یک رشتهٔ تصادفی حداقل **۱۶ کاراکتری** بسازید (ترکیبی از حروف و عدد، مثلاً `mySecret2026XYZ!`) — این را هم رمزنگاری‌شده اضافه کنید. هرچه طولانی‌تر و تصادفی‌تر باشد، امن‌تر است.
+   - روی **Save** کلیک کنید (اگر خواست، دوباره Deploy کنید).
 
-9. **یادداشت آدرس Worker** — در صفحهٔ اصلی Worker، آدرس `*.workers.dev` آن نمایش داده می‌شود.
+9. **آدرس اینترنتی Worker را کپی کنید**
+    - در صفحهٔ اصلی Worker، یک آدرس با پسوند `.workers.dev` می‌بینید. آن را کپی کنید.
 
-10. **معرفی Worker به تلگرام**:
-    ```bash
-    curl "https://api.telegram.org/bot<BOT_TOKEN>/setWebhook?url=https://<your-worker>.workers.dev/webhook/<WEBHOOK_SECRET>"
+10. **به تلگرام بگویید ربات‌تان کجاست**
+    - این لینک را در مرورگرتان باز کنید، فقط دو قسمت داخل `< >` را با توکن و آدرس Worker خودتان جایگزین کنید:
     ```
-    (این دستور را می‌توانید در هر ترمینال یا حتی مرورگر با جای‌گذاری آدرس در نوار آدرس اجرا کنید — نیازی به نصب چیزی نیست.)
+    https://api.telegram.org/bot<BOT_TOKEN>/setWebhook?url=https://<your-worker>.workers.dev/webhook/<WEBHOOK_SECRET>
+    ```
+    - اگر درست کار کرد، عبارت `{"ok":true,...}` را در صفحه می‌بینید.
 
-11. **آزمایش** — ربات را در تلگرام باز کنید و `/start` بفرستید. به‌عنوان مالک، برای باز کردن پنل مدیریت `/admin` را بفرستید (ابتدا کانال ذخیره‌سازی را همان‌جا تنظیم کنید — با فوروارد یک پیام از آن کانال به ربات، در حالی که ربات به‌عنوان ادمین آن کانال اضافه شده باشد).
+11. **امتحانش کنید!**
+    - ربات‌تان را در تلگرام باز کنید و `/start` بفرستید.
+    - چون شما مالک هستید، `/admin` را هم بفرستید تا پنل مدیریت باز شود. اولین کاری که از شما می‌خواهد تنظیم کانال ذخیره‌سازی است — کافیست یک پیام از آن کانال را برای ربات فوروارد کنید (قبلش مطمئن شوید ربات ادمین همان کانال شده باشد).
 
 ### پشتیبانی
 
@@ -124,35 +174,60 @@ Questions or issues? Reach out on Telegram: **[@NetraIR](https://t.me/NetraIR)**
 
 ### 安装步骤
 
-1. **创建您的 Telegram 机器人** — 在 Telegram 中打开 `@BotFather`,发送 `/newbot` 并按提示操作。保存它给出的令牌——这就是您的 `BOT_TOKEN`。
+1. **创建您的机器人**
+   - 打开 Telegram,搜索 **@BotFather**,和它开始对话。
+   - 发送 `/newbot`,按照提示操作(它会让您取一个名字)。
+   - 最后它会给您一长串代码,叫做**令牌(token)**。复制并保存好——这就是您的 `BOT_TOKEN`。
 
-2. **获取您的 Telegram 用户 ID** — 给 `@userinfobot` 发消息并复制您的数字 ID——这就是您的 `OWNER_ID`(初始时只有该账户可以访问管理面板)。
+2. **找到您的 Telegram ID**
+   - 搜索 **@userinfobot**,给它发送任意一条消息。
+   - 它会回复一个数字,这就是您的个人 ID。保存它——这就是您的 `OWNER_ID`。
 
-3. **创建 D1 数据库(通过网页控制台)** — 登录 Cloudflare 控制台,进入 **Workers & Pages → D1**,点击「Create database」,输入名称 `filestore-bot` 并创建。创建后打开该数据库页面,记下显示的 `Database ID`。
+3. **注册一个免费的 Cloudflare 账户**
+   - 前往 [dash.cloudflare.com](https://dash.cloudflare.com) 注册(免费套餐就够用)。
 
-4. **导入数据库结构** — 在该数据库页面,打开「Console」标签页。用文本编辑器打开 `schema.sql`,复制其全部内容,粘贴到控制台中并执行。
+4. **创建一个数据库**
+   - 在 Cloudflare 控制台左侧菜单,点击 **Workers & Pages**,再点击 **D1**。
+   - 点击 **Create database**,输入名称 `filestore-bot`,创建。
+   - 打开这个新数据库,复制页面上显示的 **Database ID**,先保存下来。
 
-5. **创建 Worker** — 进入 Workers & Pages,点击「Create」,选择「Create Worker」,输入名称(例如 `telegram-filestore-bot`),使用默认代码完成部署以创建它。
+5. **导入数据库的初始结构**
+   - 在同一个数据库页面,打开 **Console** 标签页。
+   - 用文本编辑器(比如记事本)打开项目里的 `schema.sql` 文件。
+   - 复制里面全部内容,粘贴到 Console 输入框中,点击 **Run**。
 
-6. **粘贴代码** — 打开该 Worker,点击「Edit code」(或 Quick Edit),删除默认代码,打开 `worker.js` 并复制其全部内容,粘贴到编辑器中,然后点击「Save and deploy」。
+6. **创建 Worker**(您机器人代码存放的地方)
+   - 回到 **Workers & Pages**,点击 **Create**,再点击 **Create Worker**。
+   - 随便取个名字,比如 `my-file-bot`,点击 **Deploy** 完成创建。
 
-7. **绑定数据库** — 进入该 Worker 的 Settings → Variables(或 Bindings)标签页,找到「D1 Database Bindings」,点击「Add binding」,变量名填写 `DB`,选择刚创建的 `filestore-bot` 数据库,保存。
+7. **添加机器人代码**
+   - 打开刚创建的 Worker,点击 **Edit code**。
+   - 删除里面所有默认代码。
+   - 打开项目里的 `worker.js` 文件,复制全部内容,粘贴进去。
+   - 点击 **Save and deploy**。
 
-8. **添加变量和密钥** — 在同一个 Variables 标签页中:
-   - 添加一个环境变量 `OWNER_ID`,值为您的 Telegram 数字 ID(纯文本)。
-   - 添加一个密钥变量 `BOT_TOKEN`,值为您的机器人令牌(勾选 Encrypt)。
-   - 添加一个密钥变量 `WEBHOOK_SECRET`,值为任意随机字符串(例如一个 UUID),同样加密保存。
-   保存更改,如有提示请重新部署。
+8. **设置 Worker 的变量**(这些操作都在同一个标签页完成)
+   - 进入 Worker 的 **Settings** 标签页,再点击 **Variables**(有时也叫 Bindings)。
+   - 在 **D1 Database Bindings** 部分点击 **Add binding**。"Variable name" 填 `DB`,数据库选择 `filestore-bot`。
+   - 在同一个页面,再依次添加以下三项变量:
+     - `OWNER_ID` ← 第 2 步得到的 Telegram ID(纯文本即可)。
+     - `BOT_TOKEN` ← 第 1 步得到的令牌(打开 "Encrypt" 选项)。
+     - `WEBHOOK_SECRET` ← 自己编一串**至少 16 个字符**的随机字符串(字母加数字混合,例如 `mySecret2026XYZ!`)——同样打开 "Encrypt"。越长、越随机越安全。
+   - 点击 **Save**(如果提示,请重新部署)。
 
-9. **记下 Worker 地址** — 在 Worker 概览页面可以看到它的 `*.workers.dev` 地址。
+9. **复制 Worker 的网址**
+    - 在 Worker 主页面,您会看到一个以 `.workers.dev` 结尾的网址,复制它。
 
-10. **让 Telegram 指向您的 worker**:
-    ```bash
-    curl "https://api.telegram.org/bot<BOT_TOKEN>/setWebhook?url=https://<your-worker>.workers.dev/webhook/<WEBHOOK_SECRET>"
+10. **告诉 Telegram 您的机器人在哪里**
+    - 在浏览器中打开下面这个链接,把 `< >` 里的部分换成您自己的令牌和 Worker 地址:
     ```
-    (在任意终端,或将地址粘贴到浏览器地址栏中执行即可,无需安装任何工具。)
+    https://api.telegram.org/bot<BOT_TOKEN>/setWebhook?url=https://<your-worker>.workers.dev/webhook/<WEBHOOK_SECRET>
+    ```
+    - 如果成功,页面上会显示 `{"ok":true,...}`。
 
-11. **测试** — 在 Telegram 中打开您的机器人并发送 `/start`。作为所有者,发送 `/admin` 打开管理面板(先在那里设置存储频道——将该频道的一条消息转发给机器人即可,机器人需先被添加为该频道的管理员)。
+11. **试试看!**
+    - 在 Telegram 中打开您的机器人,发送 `/start`。
+    - 因为您是所有者,再发送 `/admin` 打开管理面板。它首先会让您设置存储频道——只需转发该频道的一条消息给机器人即可(记得先把机器人加为该频道的管理员)。
 
 ### 获取支持
 
@@ -174,35 +249,60 @@ Telegram-бот, который сохраняет файлы в приватн�
 
 ### Установка
 
-1. **Создайте своего Telegram-бота** — в Telegram откройте `@BotFather`, отправьте `/newbot` и следуйте подсказкам. Сохраните выданный токен — это ваш `BOT_TOKEN`.
+1. **Создайте своего бота**
+   - Откройте Telegram, найдите **@BotFather** и начните с ним чат.
+   - Отправьте `/newbot` и следуйте подсказкам (он попросит придумать имя).
+   - В конце он даст вам длинный код — **токен**. Скопируйте и сохраните его — это ваш `BOT_TOKEN`.
 
-2. **Узнайте свой Telegram user ID** — напишите `@userinfobot` и скопируйте свой числовой ID — это ваш `OWNER_ID` (изначально только этот аккаунт имеет доступ к панели администратора).
+2. **Узнайте свой Telegram ID**
+   - Найдите **@userinfobot** и отправьте ему любое сообщение.
+   - Он ответит числом — это ваш личный ID. Сохраните его — это ваш `OWNER_ID`.
 
-3. **Создайте базу данных D1 (через веб-панель)** — войдите в панель Cloudflare, откройте **Workers & Pages → D1**, нажмите «Create database», введите имя `filestore-bot` и создайте. Затем откройте страницу базы данных и запишите показанный `Database ID`.
+3. **Зарегистрируйте бесплатный аккаунт Cloudflare**
+   - Перейдите на [dash.cloudflare.com](https://dash.cloudflare.com) и зарегистрируйтесь (бесплатного тарифа достаточно).
 
-4. **Загрузите схему базы данных** — на странице базы данных откройте вкладку «Console». Откройте файл `schema.sql` в текстовом редакторе, скопируйте всё его содержимое, вставьте в консоль и выполните.
+4. **Создайте базу данных**
+   - В панели Cloudflare слева нажмите **Workers & Pages**, затем **D1**.
+   - Нажмите **Create database**, введите имя `filestore-bot` и создайте.
+   - Откройте новую базу данных и скопируйте показанный **Database ID** — сохраните его.
 
-5. **Создайте Worker** — перейдите в Workers & Pages, нажмите «Create», выберите «Create Worker», задайте имя (например, `telegram-filestore-bot`) и разверните его с кодом по умолчанию, чтобы завершить создание.
+5. **Загрузите начальную структуру базы данных**
+   - На той же странице базы данных откройте вкладку **Console**.
+   - Откройте файл `schema.sql` (идёт вместе с проектом) в любом текстовом редакторе.
+   - Скопируйте всё его содержимое, вставьте в поле Console и нажмите **Run**.
 
-6. **Вставьте код** — откройте Worker, нажмите «Edit code» (Quick Edit), удалите код по умолчанию, откройте `worker.js`, скопируйте всё его содержимое, вставьте в редактор и нажмите «Save and deploy».
+6. **Создайте Worker** (место, где будет жить код бота)
+   - Вернитесь в **Workers & Pages**, нажмите **Create**, затем **Create Worker**.
+   - Дайте любое имя, например `my-file-bot`, и нажмите **Deploy**, чтобы завершить создание.
 
-7. **Привяжите базу данных** — на вкладке Settings → Variables (или Bindings) Worker найдите «D1 Database Bindings», нажмите «Add binding», укажите имя переменной `DB` и выберите созданную базу `filestore-bot`. Сохраните.
+7. **Добавьте код бота**
+   - Откройте созданный Worker и нажмите **Edit code**.
+   - Удалите весь код по умолчанию.
+   - Откройте файл `worker.js` (из этого проекта), скопируйте всё содержимое и вставьте сюда.
+   - Нажмите **Save and deploy**.
 
-8. **Добавьте переменные и секреты** — на той же вкладке Variables:
-   - добавьте переменную окружения `OWNER_ID` со значением вашего числового Telegram ID (обычный текст);
-   - добавьте секретную переменную `BOT_TOKEN` со значением токена бота (включите Encrypt);
-   - добавьте секретную переменную `WEBHOOK_SECRET` с произвольной случайной строкой (например, UUID), также зашифрованную.
-   Сохраните изменения и при необходимости разверните заново.
+8. **Настройте переменные Worker'а** (всё делается на одной вкладке)
+   - Перейдите на вкладку **Settings** Worker'а, затем нажмите **Variables** (иногда называется Bindings).
+   - В разделе **D1 Database Bindings** нажмите **Add binding**. В поле "Variable name" впишите `DB`, а базу выберите `filestore-bot`.
+   - На этой же странице добавьте по очереди ещё три переменные:
+     - `OWNER_ID` ← ваш Telegram ID из шага 2 (обычный текст).
+     - `BOT_TOKEN` ← токен бота из шага 1 (включите "Encrypt").
+     - `WEBHOOK_SECRET` ← придумайте случайную строку **не короче 16 символов** (смесь букв и цифр, например `mySecret2026XYZ!`) — тоже включите "Encrypt". Чем длиннее и случайнее, тем безопаснее.
+   - Нажмите **Save** (и разверните заново, если попросит).
 
-9. **Запишите адрес Worker** — на странице обзора Worker будет показан его адрес `*.workers.dev`.
+9. **Скопируйте адрес вашего Worker**
+    - На главной странице Worker вы увидите адрес, заканчивающийся на `.workers.dev`. Скопируйте его.
 
-10. **Укажите Telegram адрес вашего воркера**:
-    ```bash
-    curl "https://api.telegram.org/bot<BOT_TOKEN>/setWebhook?url=https://<your-worker>.workers.dev/webhook/<WEBHOOK_SECRET>"
+10. **Скажите Telegram, где находится ваш бот**
+    - Откройте эту ссылку в браузере, заменив части в `< >` на свой токен и адрес Worker:
     ```
-    (выполните в любом терминале или просто вставьте адрес в браузер — устанавливать ничего не нужно.)
+    https://api.telegram.org/bot<BOT_TOKEN>/setWebhook?url=https://<your-worker>.workers.dev/webhook/<WEBHOOK_SECRET>
+    ```
+    - Если всё получилось, на странице появится `{"ok":true,...}`.
 
-11. **Проверьте работу** — откройте бота в Telegram и отправьте `/start`. Как владелец, отправьте `/admin`, чтобы открыть панель администратора (сначала настройте там канал хранения — перешлите боту любое сообщение из этого канала; бот должен быть добавлен туда администратором).
+11. **Проверьте, как это работает!**
+    - Откройте вашего бота в Telegram и отправьте `/start`.
+    - Так как вы владелец, отправьте `/admin`, чтобы открыть панель управления. Сначала она попросит настроить канал хранения — просто перешлите боту любое сообщение из этого канала (сначала добавьте бота туда администратором).
 
 ### Поддержка
 
