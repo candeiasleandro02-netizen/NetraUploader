@@ -44,7 +44,6 @@ You'll need: a Cloudflare account (free tier is fine) and a Telegram account. Ev
 
 4. **🗄️ Create a database**
    - In the Cloudflare dashboard, click **Storage & Databases** on the left, then click **D1 SQL Database**.
-     > D1 lives under **Storage & Databases**, not under Workers & Pages.
    - Click **Create database**, type the name `filestore-bot`, and create it.
    - Open the new database and copy the **Database ID** shown on the page — save it for later.
 
@@ -124,7 +123,6 @@ Questions or issues? Reach out on Telegram: **[@NetraIR](https://t.me/NetraIR)**
 
 4. **🗄️ یک دیتابیس بسازید**
    - در داشبورد Cloudflare، از منوی سمت چپ روی **Storage & Databases** کلیک کنید، سپس روی **D1 SQL Database**.
-     > توجه: D1 زیرمجموعهٔ بخش **Storage & Databases** است، نه بخش Workers & Pages.
    - روی **Create database** کلیک کنید، نام `filestore-bot` را بنویسید و بسازید.
    - دیتابیس تازه‌ساخته را باز کنید و مقدار **Database ID** نمایش داده‌شده را کپی و جایی یادداشت کنید.
 
@@ -204,7 +202,6 @@ Questions or issues? Reach out on Telegram: **[@NetraIR](https://t.me/NetraIR)**
 
 4. **🗄️ 创建一个数据库**
    - 在 Cloudflare 控制台左侧菜单,点击 **Storage & Databases**,再点击 **D1 SQL Database**。
-     > 注意:D1 属于 **Storage & Databases** 分类,不在 Workers & Pages 下面。
    - 点击 **Create database**,输入名称 `filestore-bot`,创建。
    - 打开这个新数据库,复制页面上显示的 **Database ID**,先保存下来。
 
@@ -284,7 +281,6 @@ Telegram-бот, который сохраняет файлы в приватн�
 
 4. **🗄️ Создайте базу данных**
    - В панели Cloudflare слева нажмите **Storage & Databases**, затем **D1 SQL Database**.
-     > D1 находится в разделе **Storage & Databases**, а не в Workers & Pages.
    - Нажмите **Create database**, введите имя `filestore-bot` и создайте.
    - Откройте новую базу данных и скопируйте показанный **Database ID** — сохраните его.
 
