@@ -28,6 +28,8 @@ A Telegram bot that stores files (in a private Telegram channel you control) and
 
 You'll need: a Cloudflare account (free tier is fine) and a Telegram account. Everything is done through Cloudflare's web dashboard — no Node.js or command-line tools required.
 
+> 🚀 **Prefer an easy install?** Talk to **[@NetraInstallerBOT](https://t.me/NetraInstallerBOT)** on Telegram — it walks you through setup step by step, no manual copy-pasting needed.
+
 ### ⚙️ Installation
 
 1. **🤖 Create your bot**
@@ -106,6 +108,8 @@ Questions or issues? Reach out on Telegram: **[@NetraIR](https://t.me/NetraIR)**
 ### ✅ قبل از شروع
 
 به این‌ها نیاز دارید: یک حساب Cloudflare (پلن رایگان کافی است) و یک حساب تلگرام. همهٔ مراحل از طریق پنل وب Cloudflare انجام می‌شود — نیازی به نصب Node.js یا هیچ ابزار خط فرمانی نیست.
+
+> 🚀 **نصب آسان‌تر می‌خواهید؟** با ربات **[@NetraInstallerBOT](https://t.me/NetraInstallerBOT)** در تلگرام صحبت کنید — مرحله به مرحله راه‌اندازی را برایتان انجام می‌دهد، بدون نیاز به کپی-پیست دستی.
 
 ### ⚙️ نصب
 
@@ -186,6 +190,8 @@ Questions or issues? Reach out on Telegram: **[@NetraIR](https://t.me/NetraIR)**
 
 您需要:一个 Cloudflare 账户(免费套餐即可)和一个 Telegram 账户。全部操作都通过 Cloudflare 的网页控制台完成——不需要安装 Node.js 或任何命令行工具。
 
+> 🚀 **想要更简单的安装方式?** 联系 Telegram 机器人 **[@NetraInstallerBOT](https://t.me/NetraInstallerBOT)**,它会一步步引导您完成设置,无需手动复制粘贴。
+
 ### ⚙️ 安装步骤
 
 1. **🤖 创建您的机器人**
@@ -264,6 +270,8 @@ Telegram-бот, который сохраняет файлы в приватн�
 ### ✅ Перед началом
 
 Понадобится: аккаунт Cloudflare (бесплатного тарифа достаточно) и аккаунт Telegram. Всё делается через веб-панель Cloudflare — устанавливать Node.js или какие-либо инструменты командной строки не нужно.
+
+> 🚀 **Хотите более простую установку?** Напишите боту **[@NetraInstallerBOT](https://t.me/NetraInstallerBOT)** в Telegram — он проведёт вас через настройку шаг за шагом, без ручного копирования и вставки.
 
 ### ⚙️ Установка
 
